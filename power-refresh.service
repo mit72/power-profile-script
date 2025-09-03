@@ -7,7 +7,7 @@ ExecStart=/bin/bash -c '\
   while true; do \
     CUR=$(powerprofilesctl get); \
     if [ "$CUR" != "$LAST" ]; then \
-      /home/mitja/Documents/Scripts/power-refresh.sh; \
+      ~/power-refresh.sh; \
       LAST=$CUR; \
     fi; \
     sleep 5; \
@@ -18,4 +18,5 @@ Restart=always
 
 [Install]
 WantedBy=default.target
+
 
