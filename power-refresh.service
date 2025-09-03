@@ -5,8 +5,9 @@ Description=Adjust refresh rate based on power profile
 ExecStart=/usr/bin/dbus-monitor --system "type='signal',interface='net.hadess.PowerProfiles'" \
     | grep --line-buffered "net.hadess.PowerProfiles.PropertiesChanged" \
     | while read -r line; do
-        Documents/Scritps/power-refresh.sh
+        ~/power-refresh.sh
     done
 
 [Install]
+
 WantedBy=default.target
