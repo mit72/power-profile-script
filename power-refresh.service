@@ -1,13 +1,21 @@
 [Unit]
-Description=Adjust refresh rate based on power profile
+Description=Auto-adjust refresh rate when power profile changes
 
 [Service]
-ExecStart=/usr/bin/dbus-monitor --system "type='signal',interface='net.hadess.PowerProfiles'" \
-    | grep --line-buffered "net.hadess.PowerProfiles.PropertiesChanged" \
-    | while read -r line; do
-        ~/power-refresh.sh
-    done
+ExecStart=/bin/bash -c '\
+  LAST=""; \
+  while true; do \
+    CUR=$(powerprofilesctl get); \
+    if [ "$CUR" != "$LAST" ]; then \
+      /home/mitja/Documents/Scripts/power-refresh.sh; \
+      LAST=$CUR; \
+    fi; \
+    sleep 5; \
+  done \
+'
+
+Restart=always
 
 [Install]
-
 WantedBy=default.target
+
